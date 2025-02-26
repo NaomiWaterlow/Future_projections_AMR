@@ -1,0 +1,23 @@
+combo_name,bug,drug
+Acinetobacter spp.|Aminoglycosides,acispp,aminogl_R
+Acinetobacter spp.|Carbapenems,acispp,carbapen_R
+Acinetobacter spp.|Fluoroquinolones,acispp,fq_pseudo_R
+Enterococcus faecalis|Aminopenicillins,encfae,aminopen_R
+Enterococcus faecalis|High-level gentamicin,encfae,genta_high
+Enterococcus faecalis|Vancomycin,encfae,vanco_R
+Enterococcus faecium|Aminopenicillins,encfai,aminopen_R
+Enterococcus faecium|High-level gentamicin,encfai,genta_high
+Enterococcus faecium|Vancomycin,encfai,vanco_R
+Escherichia coli|Aminoglycosides,esccol,aminogl_R
+Escherichia coli|Aminopenicillins,esccol,aminopen_R
+Escherichia coli|Carbapenems,esccol,carbapen_R
+Escherichia coli|Fluoroquinolones,esccol,fq_ent_R
+Klebsiella pneumoniae|Aminoglycosides,klepne,aminogl_R
+Klebsiella pneumoniae|Carbapenems,klepne,carbapen_R
+Pseudomonas aeruginosa|Aminoglycosides,pseaer,aminogl_R
+Pseudomonas aeruginosa|Carbapenems,pseaer,carbapen_R
+Pseudomonas aeruginosa|Ceftazidime,pseaer,ceftaz_R
+Pseudomonas aeruginosa|Fluoroquinolones,pseaer,fq_pseudo_R
+Staphylococcus aureus|Meticillin (MRSA),staaur,mrsa_R
+Streptococcus pneumoniae|Macrolides,strpne,macrol_R
+Streptococcus pneumoniae|Penicillins,strpne,penic_RI
