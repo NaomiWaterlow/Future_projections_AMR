@@ -1,6 +1,12 @@
 # History files
 .Rhistory
 .Rapp.history
+plots_nw/*
+brms_fits/*
+output/*
+predictions/* 
+data/data_cleaned_fortrends.csv
+*.DS_Store
 
 # Session Data files
 .RData

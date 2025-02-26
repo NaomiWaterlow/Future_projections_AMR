@@ -1,0 +1,47 @@
+﻿Bacteria,bac,drug,Antibiotic
+Acinetobacter species,acispp,amika_R,Amikacin 
+Acinetobacter species,acispp,aminogl_R,Aminoglycosides
+Acinetobacter species,acispp,carbapen_R,Carbapenems
+Acinetobacter species,acispp,fq_pseudo_R,Fluroquinolones
+Enterococcus faecalis,encfae,aminopen_R,Aminopenicillins
+Enterococcus faecalis,encfae,genta_high,High-level aminoglycoside 
+Enterococcus faecalis,encfae,vanco_R,Vancomycin
+Enterococcus faecium,encfai,aminopen_R,Aminopenicillins
+Enterococcus faecium,encfai,genta_high,High-level aminoglycoside 
+Enterococcus faecium,encfai,vanco_R,Vancomycin
+Escherichia coli,esccol,amika_R,Amikacin
+Escherichia coli,esccol,aminogl_R,Aminoglycosides
+Escherichia coli,esccol,aminopen_R,Aminopenicillins
+Escherichia coli,esccol,carbapen_R,Carbapenems
+Escherichia coli,esccol,cefIII_entero_R,Third-generation cephalosporins
+Escherichia coli,esccol,ert_R,Ertapenem
+Escherichia coli,esccol,fq_ent_R,Fluoroquinolones
+Escherichia coli,esccol,ureidopen_R,piperacillin-tazobactam
+Klebsiella pneumoniae,klepne,amika_R,Amikacin
+Klebsiella pneumoniae,klepne,aminogl_R,Aminoglycosides
+Klebsiella pneumoniae,klepne,carbapen_R,Carbapenems
+Klebsiella pneumoniae,klepne,cefIII_entero_R,Third-generation cephalosporins
+Klebsiella pneumoniae,klepne,ert_R,Ertapenem
+Klebsiella pneumoniae,klepne,fq_ent_R,Fluoroquinolones
+Klebsiella pneumoniae,klepne,ureidopen_R,piperacillin-tazobactam
+Pseudomonas aeruginosa,pseaer,amika_R,Amikacin
+Pseudomonas aeruginosa,pseaer,aminogl_R,Aminoglycoside
+Pseudomonas aeruginosa,pseaer,carbapen_R,Carbapenem
+Pseudomonas aeruginosa,pseaer,ceftaz_R,Ceftazidime
+Pseudomonas aeruginosa,pseaer,fq_pseudo_R,Fluoroquinolone
+Pseudomonas aeruginosa,pseaer,ureidopen_R,piperacillin-tazobactam
+Staphylococcus aureus,staaur,fq_staaur_R,Fluoroquinolone
+Staphylococcus aureus,staaur,mrsa_R,MRSA (oxacillin or cefoxitin)
+Staphylococcus aureus,staaur,rifamp_R,Rifampicin
+Streptococcus pneumoniae,strpne,macrol_R,Macrolide
+Streptococcus pneumoniae,strpne,penic_RI,Penicillins
+Acinetobacter species,acispp,acispp_multi_R,multi resistance (acispp)
+Acinetobacter species,acispp,pseaer_multi_R,multi resistance (pseaer)
+Escherichia coli,esccol,esccol_multi_R,multi resistance (esccol)
+Escherichia coli,esccol,pseaer_multi_R,multi resistance (pseaer)
+Klebsiella pneumoniae,klepne,klepne_multi_R,multi resistance (klepne)
+Klebsiella pneumoniae,klepne,pseaer_multi_R,multi resistance (pseaer)
+Pseudomonas aeruginosa,pseaer,pseaer_multi_R,multi resistance (pseaer)
+Streptococcus pneumoniae,strpne,cefIII_strpne_R,cefIII (strepne)
+Streptococcus pneumoniae,strpne,fq_strpne_R,efq strepne
+Streptococcus pneumoniae,strpne,strpne_multi_R,multi resistance (strpne)
