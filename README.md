@@ -1,7 +1,7 @@
 ### Future_burden_AMR
 Calculates future burden projections of AMR based on changing demography and varying incidence and resistance prevalence levels by age and gender. 
 
-Requires data from ECDC TEsst to run - please apply for access.
+Requires data from ECDC TESSY to run - please apply for access.
 
 ## Scripts
 
