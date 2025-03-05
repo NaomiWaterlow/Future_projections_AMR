@@ -1,4 +1,5 @@
 # CALCULATING INCIDENCE
+# Generate Figure 2
 
 ##### Calculating incidence #####
 
@@ -181,7 +182,7 @@ AGE_SUMMARY_together <- ggplot(age_combo[projection == "BSL"&year %in% c(2022:20
        title = "B", colour = "age group")+ scale_y_continuous(labels = label_comma())
 
 ggsave(grid.arrange(TIME_SUMMARY_together, AGE_SUMMARY_together),
-       file="plots_nw/INCIDENCE_comparison.pdf",
+       file="plots_nw/FIGURE2.pdf", #file="plots_nw/INCIDENCE_comparison.pdf",
        width =10, height = 7)
 
 ggsave(grid.arrange(TIME_SUMMARY_F, AGE_SUMMARY_F), file="plots_nw/INCIDENCE_fixed.pdf",
