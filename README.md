@@ -27,7 +27,7 @@ Data files that need to be get read in:
  - data/proj_23np.csv and data/proj_19np.csv: demographic projections from EU countries available at https://ec.europa.eu/eurostat/web/population-demography/population-projections/database. These are included in the repo.
  - data/uk_ons_principal.csv and data/uk_ons_oldage.csv: The UK demographic projections from ONS. These are included in the repo.
  - data/country_pathogen_age_incidence_estimates.csv: contains incidence calculations from a previous PLOSmed paper: https://journals.plos.org/plosmedicine/article?id=10.1371/journal.pmed.1004301. Included in repo.
- - data/ECDC_Atlas_data_2023.cs:. This is downloaded from https://atlas.ecdc.europa.eu/public/index.aspx/. Included in repo.
+ - data/ECDC_Atlas_data_2023.csv:. This is downloaded from https://atlas.ecdc.europa.eu/public/index.aspx/. Included in repo.
  - data/coverage_2023.csv: coverage data extracted from the ECDC report available https://www.ecdc.europa.eu/sites/default/files/documents/antimicrobial-resistance-annual-epidemiological-report-EARS-Net-2023.pdf. This is included in the repo.
  - data/est_pop_cov_final.csv: Coverage for ECDC from previous PLOSmed paper. https://journals.plos.org/plosmedicine/article?id=10.1371/journal.pmed.1004301. Included in repo.
  - translate_bugs_drugs.csv: dictionary for bug and drug names
