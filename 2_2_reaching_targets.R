@@ -1,6 +1,6 @@
-# set up the interventions to change the incidence rate. 
-
+# Set up the interventions to change the incidence rate. 
 # need to run setup.r and 1_2_calculate_incidence.R first
+# Project impact of interventions and generate Figure 4
 
 
 # storage
@@ -102,7 +102,7 @@ INTERVENTION_COMPARISONS <- ggplot(incidence_changes, aes(x = pathogen, y = lowa
    labs(y = "age group", fill = "Rate of change")
 
 ggsave(grid.arrange(INTERVENTION_INCIDENCE, INTERVENTION_COMPARISONS, layout_matrix = rbind(c(1,1,2))),
-       file="plots_nw/intervention_incidence.pdf",
+       file="plots_nw/FIGURE4.pdf",#file="plots_nw/intervention_incidence.pdf",
        width =20, height = 10)
 
 saveRDS(INTERVENTION_COMPARISONS, file = "output/intervention_heatmap.RDS")
