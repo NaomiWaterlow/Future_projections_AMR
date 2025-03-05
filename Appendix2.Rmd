@@ -40,231 +40,234 @@ bug_drugs_dict <- read.csv("bug_names.csv")
 
 ```
 
-# 1 - Validation of incidence
+# 1 - Country names
 
-Total BSI incidence in 2023 was compared to model predicted 2023 BSI incidence. Antibiotic groupings in the 2023 report were slightly different that in the more disaggregated 2015-2020 data used for predictions, so small differences in classification may exist, and they 2023 data is not age or sex stratified. 
+AT is	Austria, BE is Belgium, BG is Bulgaria, CY is Cyprus, CZ is Czechia, DE is Germany, DK is Denmark, EE is Estonia, EL is Greece, ES is Spain, FI is Finland, FR is France, HR is Croatia, HU is Hungary, IE is Ireland, IS is Iceland, IT is Italy, LI is Liechtenstein, LT is Lithuania, LU is Luxembourg, LV is Latvia, MT is Malta, NL is Netherlands, NO is Norway, PL is Poland, PT is Portugal, RO is Romania, SE is Sweden, SI is Slovenia and SK is Slovakia.
 
-Figure 1 shows the log error comparing estimated vs actual data. The subsequent figures show the predictions against the data.
+# 2 - Validation of incidence
 
-```{r overall_validation, echo=FALSE, fig.cap = paste("Log error of predicted BSIs in 2023 compared to ECDC reported data. Colour indicates country. Dashed lines indicate -0.7 and 7, equating to ~ half and double the actual value."), out.width="100%"}
+Total BSI incidence in 2023 was compared to model predicted 2023 BSI incidence. Antibiotic groupings in the 2023 report were slightly different than in the more disaggregated 2015-2020 data used for predictions, so small differences in classification may exist, and they 2023 data is not age or sex stratified. 
+
+Figure S1 shows the log error comparing estimated vs actual data. The subsequent figures (S2-S12) show the predictions against the data.
+
+```{r overall_validation, echo=FALSE, fig.cap = paste("Log error of predicted BSIs in 2023 compared to ECDC reported data. Colour indicates country. Dashed lines indicate -0.7 and 0.7, equating to ~ half and double the actual value."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/logerror.pdf"))
 ```
 
 
 
-```{r validation_1, echo=FALSE, fig.cap = paste("Predicted BSIs in 2023 compared to ECDC reported data. A) ", bug_drugs_dict[1,"combo_name"], " B) ", bug_drugs_dict[2,"combo_name"],"." ), out.width="100%"}
+```{r validation_1, echo=FALSE, fig.cap = paste("Predicted BSIs in 2023 under fixed or linear trends (type, colour) compared to ECDC reported data (black point). A) ", bug_drugs_dict[1,"combo_name"], " B) ", bug_drugs_dict[2,"combo_name"],"." ), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/validation_inc_",bug_drugs_dict[2, "combo_name"],".pdf"))
 ```
 
 
-```{r validation_2, echo=FALSE, fig.cap = paste("Predicted BSIs in 2023 compared to ECDC reported data. A) ", bug_drugs_dict[3,"combo_name"], " B) ", bug_drugs_dict[4,"combo_name"],"." ), out.width="100%"}
+```{r validation_2, echo=FALSE, fig.cap = paste("Predicted BSIs in 2023 under fixed or linear trends (type, colour) compared to ECDC reported data (black point).A) ", bug_drugs_dict[3,"combo_name"], " B) ", bug_drugs_dict[4,"combo_name"],"." ), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/validation_inc_",bug_drugs_dict[4, "combo_name"],".pdf"))
 ```
 
 
-```{r validation_3, echo=FALSE, fig.cap = paste("Predicted BSIs in 2023 compared to ECDC reported data. A) ", bug_drugs_dict[5,"combo_name"], " B) ", bug_drugs_dict[6,"combo_name"],"." ), out.width="100%"}
+```{r validation_3, echo=FALSE, fig.cap = paste("Predicted BSIs in 2023 under fixed or linear trends (type, colour) compared to ECDC reported data (black point).A) ", bug_drugs_dict[5,"combo_name"], " B) ", bug_drugs_dict[6,"combo_name"],"." ), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/validation_inc_",bug_drugs_dict[6, "combo_name"],".pdf"))
 ```
 
 
-```{r validation_4, echo=FALSE, fig.cap = paste("Predicted BSIs in 2023 compared to ECDC reported data. A) ", bug_drugs_dict[7,"combo_name"], " B) ", bug_drugs_dict[8,"combo_name"],"." ), out.width="100%"}
+```{r validation_4, echo=FALSE, fig.cap = paste("Predicted BSIs in 2023 under fixed or linear trends (type, colour) compared to ECDC reported data (black point).A) ", bug_drugs_dict[7,"combo_name"], " B) ", bug_drugs_dict[8,"combo_name"],"." ), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/validation_inc_",bug_drugs_dict[8, "combo_name"],".pdf"))
 ```
 
 
-```{r validation_5, echo=FALSE, fig.cap = paste("Predicted BSIs in 2023 compared to ECDC reported data. A) ", bug_drugs_dict[9,"combo_name"], " B) ", bug_drugs_dict[10,"combo_name"],"." ), out.width="100%"}
+```{r validation_5, echo=FALSE, fig.cap = paste("Predicted BSIs in 2023 under fixed or linear trends (type, colour) compared to ECDC reported data (black point).A) ", bug_drugs_dict[9,"combo_name"], " B) ", bug_drugs_dict[10,"combo_name"],"." ), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/validation_inc_",bug_drugs_dict[10, "combo_name"],".pdf"))
 ```
 
 
-```{r validation_6, echo=FALSE, fig.cap = paste("Predicted BSIs in 2023 compared to ECDC reported data. A) ", bug_drugs_dict[11,"combo_name"], " B) ", bug_drugs_dict[12,"combo_name"],"." ), out.width="100%"}
+```{r validation_6, echo=FALSE, fig.cap = paste("Predicted BSIs in 2023 under fixed or linear trends (type, colour) compared to ECDC reported data (black point).A) ", bug_drugs_dict[11,"combo_name"], " B) ", bug_drugs_dict[12,"combo_name"],"." ), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/validation_inc_",bug_drugs_dict[12, "combo_name"],".pdf"))
 ```
 
 
-```{r validation_7, echo=FALSE, fig.cap = paste("Predicted BSIs in 2023 compared to ECDC reported data. A) ", bug_drugs_dict[13,"combo_name"], " B) ", bug_drugs_dict[14,"combo_name"],"." ), out.width="100%"}
+```{r validation_7, echo=FALSE, fig.cap = paste("Predicted BSIs in 2023 under fixed or linear trends (type, colour) compared to ECDC reported data (black point).A) ", bug_drugs_dict[13,"combo_name"], " B) ", bug_drugs_dict[14,"combo_name"],"." ), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/validation_inc_",bug_drugs_dict[14, "combo_name"],".pdf"))
 ```
 
 
-```{r validation_8, echo=FALSE, fig.cap = paste("Predicted BSIs in 2023 compared to ECDC reported data. A) ", bug_drugs_dict[15,"combo_name"], " B) ", bug_drugs_dict[16,"combo_name"],"." ), out.width="100%"}
+```{r validation_8, echo=FALSE, fig.cap = paste("Predicted BSIs in 2023 under fixed or linear trends (type, colour) compared to ECDC reported data (black point).A) ", bug_drugs_dict[15,"combo_name"], " B) ", bug_drugs_dict[16,"combo_name"],"." ), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/validation_inc_",bug_drugs_dict[16, "combo_name"],".pdf"))
 ```
 
 
-```{r validation_9, echo=FALSE, fig.cap = paste("Predicted BSIs in 2023 compared to ECDC reported data. A) ", bug_drugs_dict[17,"combo_name"], " B) ", bug_drugs_dict[18,"combo_name"],"." ), out.width="100%"}
+```{r validation_9, echo=FALSE, fig.cap = paste("Predicted BSIs in 2023 under fixed or linear trends (type, colour) compared to ECDC reported data (black point).A) ", bug_drugs_dict[17,"combo_name"], " B) ", bug_drugs_dict[18,"combo_name"],"." ), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/validation_inc_",bug_drugs_dict[18, "combo_name"],".pdf"))
 ```
 
 
-```{r validation_10, echo=FALSE, fig.cap = paste("Predicted BSIs in 2023 compared to ECDC reported data. A) ", bug_drugs_dict[19,"combo_name"], " B) ", bug_drugs_dict[20,"combo_name"],"." ), out.width="100%"}
+```{r validation_10, echo=FALSE, fig.cap = paste("Predicted BSIs in 2023 under fixed or linear trends (type, colour) compared to ECDC reported data (black point).A) ", bug_drugs_dict[19,"combo_name"], " B) ", bug_drugs_dict[20,"combo_name"],"." ), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/validation_inc_",bug_drugs_dict[20, "combo_name"],".pdf"))
 ```
 
 
-```{r validation_11, echo=FALSE, fig.cap = paste("Predicted BSIs in 2023 compared to ECDC reported data. A) ", bug_drugs_dict[21,"combo_name"], " B) ", bug_drugs_dict[22,"combo_name"],"." ), out.width="100%"}
+```{r validation_11, echo=FALSE, fig.cap = paste("Predicted BSIs in 2023 under fixed or linear trends (type, colour) compared to ECDC reported data (black point).A) ", bug_drugs_dict[21,"combo_name"], " B) ", bug_drugs_dict[22,"combo_name"],"." ), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/validation_inc_",bug_drugs_dict[22, "combo_name"],".pdf"))
 ```
 
 
 
 
-# 2 - Including age/sex resistance rates
+# 3 - Including age/sex resistance rates
 
-Total resistant BSIs per age and sex in 2030 were compared between "base" model that assumed a constant proportion resistant across age and sexes, and the "agesex" model that allowed for variration in resistance by age and sex (see methods). The following plots show a breakdown of the comparison by age and sex, and also by country. 
+Total resistant BSIs per age and sex in 2030 were compared between the "base" model that assumed a constant proportion resistant across age and sexes, and the "agesex" model that allowed for variation in resistance by age and sex (see methods, Figure 1). The following plots (S13-S50) show a breakdown of the comparison by age and sex, and also by country. 
 
 
-
-```{r comparison_1, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[1], " ", drugs[1], "."), out.width="100%"}
+```{r comparison_1, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles. ", bugs[1], " ", drugs[1], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[1],".pdf"))
 ```
 
 
-```{r comparison_2, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[2], " ", drugs[2], "."), out.width="100%"}
+```{r comparison_2, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[2], " ", drugs[2], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[2],".pdf"))
 ```
 
 
-```{r comparison_3, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[3], " ", drugs[3], "."), out.width="100%"}
+```{r comparison_3, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[3], " ", drugs[3], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[3],".pdf"))
 ```
 
-```{r comparison_4, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[4], " ", drugs[4], "."), out.width="100%"}
+```{r comparison_4, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[4], " ", drugs[4], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[4],".pdf"))
 ```
 
-```{r comparison_5, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[5], " ", drugs[5], "."), out.width="100%"}
+```{r comparison_5, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[5], " ", drugs[5], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[5],".pdf"))
 ```
 
-```{r comparison_6, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[6], " ", drugs[6], "."), out.width="100%"}
+```{r comparison_6, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[6], " ", drugs[6], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[6],".pdf"))
 ```
 
-```{r comparison_7, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[7], " ", drugs[7], "."), out.width="100%"}
+```{r comparison_7, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[7], " ", drugs[7], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[7],".pdf"))
 ```
 
-```{r comparison_8, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[8], " ", drugs[8], "."), out.width="100%"}
+```{r comparison_8, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[8], " ", drugs[8], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[8],".pdf"))
 ```
 
-```{r comparison_9, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[9], " ", drugs[9], "."), out.width="100%"}
+```{r comparison_9, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[9], " ", drugs[9], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[9],".pdf"))
 ```
 
-```{r comparison_10, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[10], " ", drugs[10], "."), out.width="100%"}
+```{r comparison_10, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[10], " ", drugs[10], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[10],".pdf"))
 ```
 
-```{r comparison_11, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[11], " ", drugs[11], "."), out.width="100%"}
+```{r comparison_11, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[11], " ", drugs[11], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[11],".pdf"))
 ```
 
-```{r comparison_12, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[12], " ", drugs[12], "."), out.width="100%"}
+```{r comparison_12, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[12], " ", drugs[12], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[12],".pdf"))
 ```
 
-```{r comparison_13, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[13], " ", drugs[13], "."), out.width="100%"}
+```{r comparison_13, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[13], " ", drugs[13], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[13],".pdf"))
 ```
 
-```{r comparison_14, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[14], " ", drugs[14], "."), out.width="100%"}
+```{r comparison_14, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[14], " ", drugs[14], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[14],".pdf"))
 ```
 
-```{r comparison_15, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[15], " ", drugs[15], "."), out.width="100%"}
+```{r comparison_15, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[15], " ", drugs[15], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[15],".pdf"))
 ```
 
-```{r comparison_16, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[16], " ", drugs[16], "."), out.width="100%"}
+```{r comparison_16, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[16], " ", drugs[16], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[16],".pdf"))
 ```
 
-```{r comparison_17, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[17], " ", drugs[17], "."), out.width="100%"}
+```{r comparison_17, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[17], " ", drugs[17], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[17],".pdf"))
 ```
 
-```{r comparison_18, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[18], " ", drugs[18], "."), out.width="100%"}
+```{r comparison_18, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[18], " ", drugs[18], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[18],".pdf"))
 ```
 
-```{r comparison_19, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[19], " ", drugs[19], "."), out.width="100%"}
+```{r comparison_19, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[19], " ", drugs[19], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[19],".pdf"))
 ```
 
-```{r comparison_20, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[20], " ", drugs[20], "."), out.width="100%"}
+```{r comparison_20, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[20], " ", drugs[20], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[20],".pdf"))
 ```
 
-```{r comparison_21, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[21], " ", drugs[21], "."), out.width="100%"}
+```{r comparison_21, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[21], " ", drugs[21], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[21],".pdf"))
 ```
 
-```{r comparison_22, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[22], " ", drugs[22], "."), out.width="100%"}
+```{r comparison_22, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[22], " ", drugs[22], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[22],".pdf"))
 ```
 
-```{r comparison_23, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[23], " ", drugs[23], "."), out.width="100%"}
+```{r comparison_23, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[23], " ", drugs[23], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[23],".pdf"))
 ```
 
-```{r comparison_24, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[24], " ", drugs[24], "."), out.width="100%"}
+```{r comparison_24, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[24], " ", drugs[24], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[24],".pdf"))
 ```
 
-```{r comparison_25, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[25], " ", drugs[25], "."), out.width="100%"}
+```{r comparison_25, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[25], " ", drugs[25], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[25],".pdf"))
 ```
 
-```{r comparison_26, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[26], " ", drugs[26], "."), out.width="100%"}
+```{r comparison_26, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[26], " ", drugs[26], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[26],".pdf"))
 ```
 
-```{r comparison_27, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[27], " ", drugs[27], "."), out.width="100%"}
+```{r comparison_27, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[27], " ", drugs[27], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[27],".pdf"))
 ```
 
-```{r comparison_28, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[28], " ", drugs[28], "."), out.width="100%"}
+```{r comparison_28, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[28], " ", drugs[28], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[28],".pdf"))
 ```
 
-```{r comparison_29, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[29], " ", drugs[29], "."), out.width="100%"}
+```{r comparison_29, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[29], " ", drugs[29], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[29],".pdf"))
 ```
 
-```{r comparison_30, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[30], " ", drugs[30], "."), out.width="100%"}
+```{r comparison_30, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[30], " ", drugs[30], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[30],".pdf"))
 ```
 
-```{r comparison_31, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[31], " ", drugs[31], "."), out.width="100%"}
+```{r comparison_31, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[31], " ", drugs[31], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[31],".pdf"))
 ```
 
-```{r comparison_32, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[32], " ", drugs[32], "."), out.width="100%"}
+```{r comparison_32, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[32], " ", drugs[32], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[32],".pdf"))
 ```
 
-```{r comparison_33, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[33], " ", drugs[33], "."), out.width="100%"}
+```{r comparison_33, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[33], " ", drugs[33], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[33],".pdf"))
 ```
 
-```{r comparison_34, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[34], " ", drugs[34], "."), out.width="100%"}
+```{r comparison_34, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[34], " ", drugs[34], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[34],".pdf"))
 ```
 
-```{r comparison_35, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[35], " ", drugs[35], "."), out.width="100%"}
+```{r comparison_35, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[35], " ", drugs[35], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[35],".pdf"))
 ```
 
-```{r comparison_36, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[36], " ", drugs[36], "."), out.width="100%"}
+```{r comparison_36, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[36], " ", drugs[36], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[36],".pdf"))
 ```
 
-```{r comparison_37, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[37], " ", drugs[37], "."), out.width="100%"}
+```{r comparison_37, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[37], " ", drugs[37], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[37],".pdf"))
 ```
 
-```{r comparison_38, echo=FALSE, fig.cap = paste("Predicted resistant BSIs in 2030 using models with differences in resistance by age/sex. A  positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and teh dotted / dashed lines represent a 50 and 100% difference respecively. ", bugs[38], " ", drugs[38], "."), out.width="100%"}
+```{r comparison_38, echo=FALSE, fig.cap = paste("Difference between ‘agesex’ and ‘base’ model projections in 2030. A positive difference indicates that using the ‘base’ model underestimates resistant BSIs compared to the ‘agesex’ model. A) by age and sex. The line depicts the median and the ribbon the 95% quantiles. The dashed line at 0 indicates no difference. B) by country. The solid line indicates no difference, and the dotted / dashed lines represent a 50 and 100% difference respecively. The dot depicts the median and the ribbon the 95% quantiles.  ", bugs[38], " ", drugs[38], "."), out.width="100%"}
 knitr::include_graphics(path =paste0("plots_nw/supplement_2030_summary2_",plain_model_names[38],".pdf"))
 ```
