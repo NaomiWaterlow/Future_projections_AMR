@@ -1,19 +1,31 @@
-# validate model against ECDC data.... 
+################################################################
+####### Compare model burden against ECDC data #################
+####### Developers: N Waterlow & G Knight ###################### 
+################################################################
 
-# all of this is assuming no policy changes or 'shocks'
+# This script validates model predictions against ECDC data (2023) to compare predicted 
+# and actual incidence rates of antimicrobial resistance (AMR) for different 
+# pathogens and drugs. The validation process includes loading coverage and 
+# incidence data, comparing model predictions to real-world data, and calculating 
+# log errors and percent differences. The results are visualized using plots, 
+# and the script also checks for consistency across different bugs, countries, 
+# and model types. The comparison results are saved for further analysis.
+
+# All of this is assuming no policy changes or 'shocks': a projection not a forecast
+
 source("3_0_load_models.R")
 
 #First need data to compare to 
 # ECDC ATLAS All amr
 validation_data <- data.table(read.csv("data/ECDC_Atlas_data_2023.csv"))
-# load in 2023 coverage data extraceted from ECDC report
+# load in 2023 coverage data extracted from ECDC report
 # https://www.ecdc.europa.eu/sites/default/files/documents/antimicrobial-resistance-annual-epidemiological-report-EARS-Net-2023.pdf
 coverage_23 <- data.table(read.csv("data/coverage_2023.csv"))
 
 #for storing the comparison data
 store_comparison <- data.frame()
 # NOTE - WE have more combinations in the original data that are available in the 2023 ATLAS download
-# so can't validate everything! Don't validate combined ones in case other things are included. 
+# so can't valodate everything! Don't validate combined ones in case other things are included. 
 ##### Name and drug matching from here: https://www.ecdc.europa.eu/en/publications-data/tessy-metadata-report
 bug_drugs_dict <- read.csv("bug_names.csv")
 
@@ -83,7 +95,7 @@ for(i in 1:nrow(bug_drugs_dict)){
     
     if(fixed_incidence == F){
       pred_age_2023_F <- pred_age_2023
-      pred_age_2023_F$type = "changing"
+      pred_age_2023_F$type = "linear"
     }
     
   }
@@ -102,6 +114,7 @@ for(i in 1:nrow(bug_drugs_dict)){
     facet_grid(projection~.) + 
     coord_flip() + 
     geom_point(aes(y = act_num), colour = "black") + 
+    scale_y_continuous("Incidence per 100,000") + 
     labs(title = paste0("2023: ", bug_choice))
   
   #check if even or not, so can get two plots per figure
@@ -171,11 +184,11 @@ for(i in 1:nrow(bug_drugs_dict)){
   
 }
 
-
+#### Explore log error 
 store_comparison <- data.table(store_comparison)
 store_comparison[, percent_dif := ((act_num-Q50)/act_num)*100]
 subset_to_validate <- store_comparison[projection =="BSL" &
-                                         type == "changing" &
+                                         type == "linear" &
                                          !is.na(percent_dif), ]
 
 subset_to_validate[, log_error :=log(Q50/act_num)]
@@ -187,5 +200,44 @@ LOGERROR <- ggplot(subset_to_validate,
   geom_vline(xintercept = -0.7, linetype = "dashed") + 
   # lims(x = c(0,250)) + 
   labs(x ="Log error")
+
 ggsave(grid.arrange(LOGERROR, nrow =1), file=paste0("plots_nw/logerror.pdf"),
        width =9, height = 5)
+
+# How many can compare? which country antibiotic bacteria can we compare? 
+dim(subset_to_validate)
+# 1/2 - 2
+dim(subset_to_validate %>% filter(log_error < 0.7, log_error > -0.7))[1] / dim(subset_to_validate)[1]
+# 1/3 - 3
+dim(subset_to_validate %>% filter(log_error < 1.0986, log_error > -1.0986))[1] / dim(subset_to_validate)[1]
+# 2/3 within 1/3 - 3 
+
+subset_to_validate %>% filter(percent_dif > -Inf) %>% 
+  summarise(mean = mean(percent_dif, na.rm = TRUE),
+            med = median(percent_dif, na.rm = TRUE), 
+            range = range(percent_dif))
+
+dim(subset_to_validate %>% filter(percent_dif > -50, percent_dif < 50))[1] / dim(subset_to_validate)[1]
+# 39% within 50% 
+dim(subset_to_validate %>% filter(percent_dif > -100, percent_dif < 100))[1] / dim(subset_to_validate)[1]
+# 60% within 100% 
+
+# Some countries better than others
+nbug = length(unique(subset_to_validate$bug))
+nc = length(unique(subset_to_validate$country))
+subset_to_validate %>% group_by(country) %>% filter(log_error < 0.7, log_error > -0.7) %>%
+  summarise(perc_bugs_per_c = 100 * n()/nbug) %>%
+  arrange(desc(perc_bugs_per_c)) %>%
+  print(n=Inf)
+
+0.5*nc
+
+# Some bacteria better than others 
+subset_to_validate %>% group_by(bug) %>% filter(log_error < 0.7, log_error > -0.7) %>%
+  summarise(perc_bugs_per_c = 100 * n()/nc) %>%
+  arrange(desc(perc_bugs_per_c)) %>%
+  print(n=Inf)
+  
+0.5*nbug
+filter(perc_bugs_per_c > 50)
+

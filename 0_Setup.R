@@ -1,4 +1,14 @@
-# SETUP
+########################################################## 
+####### SETUP   ##########################################
+####### Developers: N Waterlow & G Knight ################ 
+##########################################################
+
+# This script processes antimicrobial resistance (AMR) data from the ECDC, 
+# filtering, summarizing, and formatting it for statistical modeling. 
+# It calculates resistance proportions by age group and overall, 
+# prepares data for Bayesian regression models, and ensures necessary directories exist.
+
+# Load libraries 
 library(plyr)
 library(dplyr)
 library(tidyverse)
@@ -12,22 +22,28 @@ library(scales)
 library(flextable)
 library(officer)
 library(cowplot)
+library(here)
+library(future)
+library(future.apply)
 theme_set(theme_bw())
 
 
 # LOAD DATA
 ### This is data from the ECDC - please apply to TESSY for access
-amr_data_long_orig <- read_csv("data/data_cleaned_fortrends.csv") 
+amr_data_long_orig <- read_csv("data/data_cleaned_fortrends.csv") %>%
+  mutate(combo = paste0(pathogen, name))
 ### REMOVE age 0 and rename
 data_use_ages <- amr_data_long_orig %>% filter(year > 2009, year < 2020) %>%
   dplyr::rename(sex = gender) %>% 
   # mutate(age_group = cut(age, breaks = seq(-1,120,5))) %>% # Add age groupings
   filter(age != 0)  # remove age 0 as per previous analysis
+  
 
 # work out percentage resistance by age group
 data_use_ages <- data_use_ages %>%
   dplyr::group_by(year, country, sex, combo, age) %>% 
-  dplyr::summarise(susn = sum(sus), resn = sum(res), proportion = resn / (susn + resn))
+  dplyr::summarise(susn = sum(sus, na.rm = TRUE), 
+                   resn = sum(res, na.rm = TRUE), proportion = resn / (susn + resn))
 
 # format age table for use in models
 data_use_ages <- data.table(data_use_ages)
@@ -54,6 +70,8 @@ data_use1 <- data_use1[!grepl("multi", combo)]
 dir.create(file.path(here(), "output"))
 dir.create(file.path(here(), "brms_fits"))
 dir.create(file.path(here(), "plots_nw"))
+dir.create(file.path(here(), "predictions"))
+
 
 
 

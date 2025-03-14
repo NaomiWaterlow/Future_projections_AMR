@@ -1,22 +1,36 @@
-# from posteriors
-# make some plots from predictions etc. 
-# can take a bit of time (couple mins per bug-drug)
+######################################################################################
+####### Generates the impacts of each interventions on each bug-drug #################
+####### Developers: N Waterlow & G Knight ############################################
+######################################################################################
+
+# This processes and analyzes model predictions (from posteriors) on the impact of interventions on 
+# resistant bloodstream infections (BSIs) caused by bacteria and antibiotics. 
+# It loads model outputs, calculates summary statistics, and compares predictions 
+# across various interventions and models. 
+# The code generates several visualizations including trends in BSIs over time, 
+# country-specific projections, and a heatmap showing relative changes in resistance. 
+# Results are saved for further analysis, with comparisons to 2019 baseline data. 
+# The script also includes options for generating plots to visualize intervention effects.
+# Also generates FIGURE 3 and FIGURE 5
+
+source("3_0_load_models.R")
 
 # look at one example
 model_target_multi <- c(2,13,33)
 specific_subset <- model_target_multi
 model_target_multi <- c(1:length(plain_model_names))
 
-source("3_0_load_models.R")
 agesex_country_combo <- data.frame()
 agesex_overall_combo <- data.frame()
 
 for(ivt in 1:nrow(interventions)){
   for(model_target in model_target_multi){
+    
     # load the specified model
     name_run <- as.character(interventions[ivt,"intervention_name"])
     target_model <- readRDS(file = paste0("predictions/individual_predictions",name_run,"_",
                                           plain_model_names[model_target], ".RDS"))
+    
     #take out of the storage list
     prediction_data <- target_model[[1]] # this is the input data used to predict from
     predictions_plain <- target_model[[2]] # this is the predictions from the 'plain' model
@@ -88,7 +102,7 @@ for(ivt in 1:nrow(interventions)){
     TREND_BY_COUNTRY <- ggplot(agesex_country[year_s <= c(2030-2009)], aes(x = year_s, y = Q50)) + 
       geom_ribbon(aes(ymin = Q2.5, ymax = Q97.5, fill = projection), alpha = 0.5) + 
       geom_line(aes(colour = projection)) + 
-       geom_hline(yintercept = 1, linetype =2) + 
+      geom_hline(yintercept = 1, linetype =2) + 
       scale_fill_manual(values = c("darkgreen", "orange", "purple"))+
       scale_colour_manual(values = c("darkgreen", "orange", "purple"))+
       facet_wrap(.~country, scales = "free_y", nrow=3) + 
@@ -110,27 +124,33 @@ for(ivt in 1:nrow(interventions)){
     
     print(paste0(name_run, " for model ", model_target, " complete"))
   }
-  
 }
 
-# save all the above as can take time
-saveRDS(list(agesex_country_combo, agesex_overall_combo), file = "output/compare_outputs.RDS")
+# save all the above as can take time - but only do if doing all names otherwise overwrites
+if(length(model_target_multi)>3){
+  saveRDS(list(agesex_country_combo, agesex_overall_combo), file = "output/compare_outputs.RDS")
+}
 
-compare_outputs <- readRDS("~/Documents/GitHub/Future_burden_AMR/output/compare_outputs.RDS")
+########################################################################################################################################
+################################# If running later #####################################################################################
+########################################################################################################################################
+compare_outputs <- readRDS("output/compare_outputs.RDS")
 agesex_country_combo <- compare_outputs[[1]]
 agesex_overall_combo <- compare_outputs[[2]]
 
-agesex_country_combo[,type := factor(type, levels=c("fixed", "varying", "minus1", "minus5", "minus5_over65", "minus20"))]
-agesex_overall_combo[,type := factor(type, levels=c("fixed", "varying", "minus1", "minus5", "minus5_over65", "minus20"))]
+agesex_country_combo[which(type == "varying"), "type"] <- "linear"
+agesex_overall_combo[which(type == "varying"), "type"] <- "linear"
+agesex_country_combo[,type := factor(type, levels=c("fixed", "linear", "minus1", "minus5", "minus5_over65", "minus20"))]
+agesex_overall_combo[,type := factor(type, levels=c("fixed", "linear", "minus1", "minus5", "minus5_over65", "minus20"))]
 
 #but we want to compare to 2019 - so need to load in the actual data. 
 # will already be loaded from Setup.R
-#subset pathgoen
+#subset pathogen
 cleaned_string <- gsub("^(plain_)|(.rds$)", "", plain_model_names[model_target_multi])
 
 # subset year
 data_2019 <- data_use_ages[year == 2019 & combo %in% cleaned_string]
-coverages <- data.table(read.csv("~/Documents/GitHub/ecdc_data/data/est_pop_cov_final.csv"))
+coverages <- data.table(read.csv("data/est_pop_cov_final.csv"))
 coverage_19 <- coverages[year == 2019]
 # use this just for quick country name conversion
 use_for_country <- data.table(read.csv("data/ECDC_Atlas_data_2023.csv"))
@@ -154,18 +174,27 @@ bug_names<- data.table(read_csv("translate_drug_bugs.csv"))
 bug_names[, label := paste0(bac, drug)]
 agesex_country_combo[bug_names, on= .(bug = label),bac := Bacteria]
 agesex_country_combo[bug_names, on= .(bug = label),drug := Antibiotic]
-# susbet relevant rows for heatmap and format for plotting
-heatmap_maker <- agesex_country_combo[projection == "BSL" & year_s == (2030-2009) & type == "varying"]
+# subset relevant rows for heatmap and format for plotting
+heatmap_maker <- agesex_country_combo[projection == "BSL" & year_s == (2030-2009) & type == "linear"]
 heatmap_maker_ordering <- heatmap_maker[bac  == "Escherichia coli" & drug == "Fluoroquinolones"]
 heatmap_maker[, country := factor(country, levels = heatmap_maker_ordering[order(rel_Q50)]$country )]
 heatmap_maker_ordering <- heatmap_maker[country  == "DE"]
 heatmap_maker[, bug := factor(bug, levels = heatmap_maker_ordering[order(rel_Q50)]$bug )]
-# manually change teh infinite values to the extremes of the heatmap
+# manually change the infinite values to the extremes of the heatmap
 heatmap_maker[ base == 0, rel_Q50 := exp(5)]
 heatmap_maker[ Q50 == 0, rel_Q50 := exp(-2.5)]
 heatmap_maker[ Q50 == 0 & base == 0, rel_Q50 := exp(0)]
 
-# create teh plot
+heatmap_maker <- heatmap_maker %>%
+  mutate(var = case_when(bac == 'Enterococcus faecalis' ~ 'E. faecalis',
+                         bac == 'Streptococcus pneumoniae' ~ 'S. pneumoniae',
+                         bac == 'Enterococcus faecium' ~ 'E. faecium',
+                         bac == 'Klebsiella pneumoniae' ~ 'K. pneumoniae',
+                         bac == 'Pseudomonas aeruginosa' ~ 'P. aeruginosa',
+                         bac == 'Staphylococcus aureus' ~ 'S. aureus',
+                         bac == 'Staphylococcus aureus' ~ 'S. aureus'))
+
+# create the plot
 HEATMAP <- ggplot(heatmap_maker, aes(x = country, y = drug, fill = log(rel_Q50))) + 
   geom_tile() + 
   facet_grid(bac~., scales = "free", space = "free")+
@@ -199,25 +228,25 @@ REL_COUNTRIES <- ggplot(agesex_country_combo[projection == "BSL" & year_s <= c(2
   geom_ribbon(aes(ymin = rel_Q2.5, ymax = rel_Q97.5, fill = type), alpha = 0.5) + 
   geom_line(aes(colour = type)) + 
   # geom_hline(yintercept = 0, linetype =2) + 
-#  scale_fill_manual(values = c("darkgreen", "orange"))+
- # scale_colour_manual(values = c("darkgreen", "orange"))+
+  #  scale_fill_manual(values = c("darkgreen", "orange"))+
+  # scale_colour_manual(values = c("darkgreen", "orange"))+
   facet_grid(interaction(bac, drug, sep = "\n")~country, scales = "free_y") + 
   labs(y = "Resistant BSI vs 2019", title = "B", 
        x = "Year", fill = "Intervention", colour = "Intervention") + 
   geom_hline(yintercept = 1) + 
   geom_hline(yintercept = 0.9, linetype = "dotted")+
   theme(#legend.position="none", 
-       axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
+    axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
   theme(legend.key.height = unit(1.5, "lines"))
 
 REL_COUNTRIES_VARYING <- ggplot(agesex_country_combo[projection == "BSL" & year_s <= c(2030-2009) & 
-                                                       type == "varying"& 
+                                                       type == "linear"& 
                                                        bug %in% specific_names],
-                        aes(x = year_s+2009, y = rel_Q50)) + 
+                                aes(x = year_s+2009, y = rel_Q50)) + 
   geom_ribbon(aes(ymin = rel_Q2.5, ymax = rel_Q97.5, fill = interaction(bac, drug, sep = "\n")), alpha = 0.5) + 
   geom_line(aes(colour = interaction(bac, drug, sep = "\n"))) + 
   geom_hline(yintercept = 1, linetype =2) + 
-   scale_fill_manual(values = c("darkgreen", "orange", "purple"))+
+  scale_fill_manual(values = c("darkgreen", "orange", "purple"))+
   scale_colour_manual(values = c("darkgreen", "orange", "purple"))+
   facet_wrap(~country, scales = "free_y", nrow = 3) + 
   lims(y = c(0,NA))+
@@ -257,29 +286,29 @@ REL_OVERALL <- ggplot(agesex_overall_combo[projection == "BSL" & year_s <= c(205
   geom_line(aes(colour = type)) + 
   facet_grid(.~interaction(bac, drug, sep = "\n"))+
   # geom_hline(yintercept = 0, linetype =2) + 
- # scale_fill_manual(values = c("darkgreen", "orange"))+
- # scale_colour_manual(values = c("darkgreen", "orange"))+
+  # scale_fill_manual(values = c("darkgreen", "orange"))+
+  # scale_colour_manual(values = c("darkgreen", "orange"))+
   geom_hline(yintercept = 0.9, linetype = "dashed")+
   geom_vline(xintercept = 2030, linetype = "dotted")+
   #  lims(y = c(1,120000000))+
-  labs(y = "Resistant BSI vs 2019",, title = "A",
+  labs(y = "Resistant BSI vs 2019",, title = "B",
        x = "Year", colour = "Intervention", fill = "Intervention")+
   theme(legend.key.height = unit(1.5, "lines"), 
         strip.text = element_text(face = "italic"))
 
 
 REL_OVERALL_VARYING <- ggplot(agesex_overall_combo[projection == "BSL" & year_s <= c(2050-2009) &
-                                                     type == "varying"& 
+                                                     type == "linear"& 
                                                      bug %in% specific_names], aes(x = year_s+2009, y = rel_Q50)) + 
   geom_ribbon(aes(ymin = rel_Q2.5, ymax = rel_Q97.5, fill =interaction(bac, drug, sep = "\n")), alpha = 0.5) + 
   geom_line(aes(colour = interaction(bac, drug, sep = "\n"))) + 
-#  facet_grid(.~bug)+
+  #  facet_grid(.~bug)+
   # geom_hline(yintercept = 0, linetype =2) + 
   scale_fill_manual(values = c("darkgreen", "orange", "purple"))+
   scale_colour_manual(values = c("darkgreen", "orange", "purple"))+
   #  lims(y = c(1,120000000))+
   labs(y = "Resistant BSI vs 2019",, title = "A",
-       x = "Year", colour = "Bacteria", fill = "Bacteria") + 
+       x = "Year", colour = "Bacteria\nAntibiotic", fill = "Bacteria") + 
   theme(legend.key.height = unit(1.5, "lines"), 
         strip.text = element_text(face = "italic"))
 
@@ -292,6 +321,17 @@ ggsave(grid.arrange(REL_OVERALL_VARYING,
        , file=paste0("plots_nw/BSIs_combo",model_target_multi[1],"_",model_target_multi[2] ,".jpeg"),
        width =20, height = 10)
 
+ggsave(grid.arrange(REL_OVERALL_VARYING,
+                    REL_COUNTRIES_VARYING + theme(legend.position = "none"),
+                    HEATMAP + labs(title = "C", fill = "relative change (log)"),
+                    layout_matrix = rbind(c(1,3), 
+                                          c(2,3), 
+                                          c(2,3)))
+       , file=paste0("plots_nw/FIGURE3.jpeg"),
+       width =20, height = 10)
+
+
+
 # ggsave(grid.arrange(REL_OVERALL, REL_COUNTRIES, layout_matrix = rbind(c(1), 
 #                                                                                       c(2), 
 #                                                                                       c(2)))
@@ -302,9 +342,15 @@ INTERVENTION_COMPARISONS <- readRDS(file = "output/intervention_heatmap.RDS")
 saveRDS(REL_OVERALL, file = "output/rel_overall_plot.RDS")
 
 ggsave(grid.arrange(REL_OVERALL, INTERVENTION_COMPARISONS + labs(title = "B"), layout_matrix = rbind(c(1,1,2), 
-                                                                      c(1,1,2), 
-                                                                      c(1,1,2)))
+                                                                                                     c(1,1,2), 
+                                                                                                     c(1,1,2)))
        , file=paste0("plots_nw/BSIs_combo_interventions_",model_target_multi[1],"_",model_target_multi[2] ,".pdf"),
+       width =14, height = 8)
+
+ggsave(grid.arrange(INTERVENTION_COMPARISONS + labs(title = "A"),REL_OVERALL, layout_matrix = rbind(c(1,2,2), 
+                                                                                                     c(1,2,2), 
+                                                                                                     c(1,2,2)))
+       , file=paste0("plots_nw/FIGURE5.jpeg"),
        width =14, height = 8)
 
 ggsave(HEATMAP, file = paste0("plots_nw/HEATMAP_SUPPLEMENT.pdf"), 
@@ -315,41 +361,42 @@ ggsave(HEATMAP, file = paste0("plots_nw/HEATMAP_SUPPLEMENT.pdf"),
 text_summaries <- agesex_overall_combo[projection == "BSL" & year_s == c(2030-2009), ]
 # How many of the bu-drugs get below 90% by intervention type. 
 text_summaries[rel_Q50<=0.9, .N, by = "type"]#meet target
+text_summaries[rel_Q97.5<=0.9, .N, by = "type"]#meet target
 text_summaries[, .N, by = "type"] # total
 props <- text_summaries[rel_Q50<=0.9, .N, by = "type"]
-props[,percent := (N/46)*100]# percentages
+props[,percent := (N/38)*100]# percentages
 
 # ##### Create all the intervention plots for the supplement
 
 unique_bug_drugs <- unique(agesex_overall_combo$bug)
 
 for(i in 1:length(unique_bug_drugs)){
-
-
-INTERVENTION <- ggplot(agesex_overall_combo[projection == "BSL" & year_s <= c(2050-2009)& 
-                                             bug %in% unique_bug_drugs[i]], aes(x = year_s+2009, y = rel_Q50)) + 
-  geom_ribbon(aes(ymin = rel_Q2.5, ymax = rel_Q97.5, fill = type), alpha = 0.5) + 
-  geom_line(aes(colour = type)) + 
-  facet_grid(.~interaction(bac, drug, sep = "\n"))+
-  # geom_hline(yintercept = 0, linetype =2) + 
-  # scale_fill_manual(values = c("darkgreen", "orange"))+
-  # scale_colour_manual(values = c("darkgreen", "orange"))+
-  geom_hline(yintercept = 0.9, linetype = "dashed")+
-  geom_vline(xintercept = 2030, linetype = "dotted")+
-  #  lims(y = c(1,120000000))+
-  labs(y = "Resistant BSI vs 2019",
-       x = "Year", colour = "Intervention", fill = "Intervention")+
-  theme(legend.key.height = unit(1.5, "lines"), 
-        strip.text = element_text(face = "italic"))
-
-ggsave(INTERVENTION, file = paste0("plots_nw/INTERVENTIONS_",unique_bug_drugs[i], ".pdf"), 
-       width = 14, height = 10)
-
-
+  
+  
+  INTERVENTION <- ggplot(agesex_overall_combo[projection == "BSL" & year_s <= c(2050-2009)& 
+                                                bug %in% unique_bug_drugs[i]], aes(x = year_s+2009, y = rel_Q50)) + 
+    geom_ribbon(aes(ymin = rel_Q2.5, ymax = rel_Q97.5, fill = type), alpha = 0.5) + 
+    geom_line(aes(colour = type)) + 
+    facet_grid(.~interaction(bac, drug, sep = "\n"))+
+    # geom_hline(yintercept = 0, linetype =2) + 
+    # scale_fill_manual(values = c("darkgreen", "orange"))+
+    # scale_colour_manual(values = c("darkgreen", "orange"))+
+    geom_hline(yintercept = 0.9, linetype = "dashed")+
+    geom_vline(xintercept = 2030, linetype = "dotted")+
+    #  lims(y = c(1,120000000))+
+    labs(y = "Resistant BSI vs 2019",
+         x = "Year", colour = "Intervention", fill = "Intervention")+
+    theme(legend.key.height = unit(1.5, "lines"), 
+          strip.text = element_text(face = "italic"))
+  
+  ggsave(INTERVENTION, file = paste0("plots_nw/INTERVENTIONS_",unique_bug_drugs[i], ".pdf"), 
+         width = 14, height = 10)
+  
+  
 }
 
 
 # range of relative changes by country
 temp <- copy(agesex_country_combo)
-temp <- temp[projection == "BSL" & year_s == 21 & bug == "acisppaminogl_R" & type == "varying"]
+temp <- temp[projection == "BSL" & year_s == 21 & bug == "acisppaminogl_R" & type == "linear"]
 

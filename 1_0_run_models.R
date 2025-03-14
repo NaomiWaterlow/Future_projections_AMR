@@ -1,7 +1,16 @@
-# This scripts runs Bayesian hierarchical regression models
-# There are two sets of models - one with age and sex and one without
-# Takes a VERY LONG TIME! (weeks)
+########################################################## 
+####### Run the Bayesian hierarchical regression models ##
+####### Developers: N Waterlow & G Knight ################ 
+##########################################################
 
+# This script runs Bayesian hierarchical regression models to analyze antimicrobial 
+# resistance trends. 
+# It includes two model sets: one without age and sex variables and one incorporating them. 
+# The models estimate resistance proportions over time and across countries, 
+# adjusting for key factors. Due to complexity, some models require additional 
+# convergence controls or extended iterations. Model predictions are visualized and saved. 
+
+# WARNING: This script takes a very long time to run (potentially weeks).
 
 # fit the no age no sex models
 for(i in unique(data_use1$combo)){

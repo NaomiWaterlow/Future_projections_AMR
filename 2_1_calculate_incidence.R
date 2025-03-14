@@ -1,9 +1,18 @@
-# CALCULATING INCIDENCE
-# Generate Figure 2
+########################################################## 
+####### Calculate incidence ##############################
+####### Developers: N Waterlow & G Knight ################ 
+##########################################################
+
+# This script calculates and visualizes the incidence of bloodstream infections (BSI) 
+# across different pathogens, age groups, and genders over time. 
+# It processes incidence estimates, models trends, and integrates demographic projections 
+# to forecast future incidence. The script generates visualizations of incidence changes 
+# and demographic impacts.
+# Generates FIGURE 2
 
 ##### Calculating incidence #####
 
-# from ecdc previous paper
+# from ecdc previous paper (Waterlow 2024 PLoS Med)
 incidence_est_data_cntrylevel <- data.table(read_csv("data/country_pathogen_age_incidence_estimates.csv")[,-1] %>%
                                               rename(gender = sex) )
 
@@ -148,6 +157,13 @@ TIME_SUMMARY_together <- ggplot(time_combo[year %in% c(2022:2030) & projection =
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), 
         strip.text = element_text(face = "italic"))
 
+### Ratios of women to men
+time_combo[year %in% c(2022,2030) & projection == "BSL" & type == "linear"] %>%
+  pivot_wider(names_from = gender, values_from = V1) %>%
+  mutate(ratio = round(f/m,2)) %>%
+  arrange(pathogen)
+
+## Age groupings 
 projections_by_path[, age_group := cut(age, breaks =seq(-1, 120, 15))] # Add age groupings
 projections_by_path[age_group== "(-1,14]", age_group := "(0,14]"]
 projections_by_path[,age_group := factor(age_group, levels = c(unique(projections_by_path$age_group)))]

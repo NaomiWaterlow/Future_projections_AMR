@@ -1,4 +1,18 @@
-# outputs across countries.
+######################################################################################
+####### Compares predictions from "base" vs "agesex" model ###########################
+####### Developers: N Waterlow & G Knight ############################################
+######################################################################################
+
+# This script processes model prediction outputs for bacterial resistance to antibiotics 
+# across various countries, age groups, and sexes. It generates several plots (Figure 4) 
+# to illustrate the impact of using different modeling approaches on the results.
+# The script compares the "plain" ("base") model (no age/sex stratification) with 
+# the "agesex" model, computes differences in BSI rates, and visualizes these differences.
+# The output includes country-level and age/sex-specific differences, as well as 
+# summary statistics and figures. The results are saved in a Word document and 
+# several plots are generated to provide insights into the data 
+# across different bacteria and antibiotics.
+# Generates FIGURE 4
 
 # from posteriors
 # make some plots from predictions etc. 
@@ -251,7 +265,7 @@ ggsave(grid.arrange(fish_plot_1 + labs(title = bquote("A     2030 only: " * ital
                     layout_matrix = rbind(c(1,1,1,1,1,4),
                                           c(2,2,2,2,2,4), 
                                           c(3,3,3,3,3,4))),
-       file=paste0("plots_nw/2030_fishplot_figure", ".pdf"),
+       file=paste0("plots_nw/FIGURE4.jpeg"),
        width =10, height = 7)
 
 
@@ -275,7 +289,7 @@ combined_results <- data.table(combined_results)
 combined_results[, total_num := tstrsplit(total.diff, " ")[[1]]] 
 combined_results[total_num>0, .N]/combined_results[, .N]
 combined_results[, .N]
-# positive means we undesteimate in plain model
+# positive means we underestimate in plain model
 combined_results[, total_male := tstrsplit(male.diff, " ")[[1]]] 
 combined_results[total_male>0, .N]/combined_results[, .N]
 combined_results[, total_female := tstrsplit(female.diff, " ")[[1]]] 

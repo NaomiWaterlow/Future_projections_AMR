@@ -1,4 +1,7 @@
-# MASTER SCRIPT for running future burden
+########################################################## 
+####### MASTER SCRIPT  ###################################
+####### Developers: N Waterlow & G Knight ################ 
+##########################################################
 
 # ALWAYS RUN interventions and Setup.R first
 # And must also run 2_ section for any of the later numbers
@@ -45,7 +48,7 @@ source("4_0_model_validation.R")
 
 # analyse all the model predictions
 #specify whether to run for earlier figures, or whether to run for intervention analysis
-#### NOTE: around line 120 there is an option to save / readin an already saved dataframe. 
+#### NOTE: around line 120 there is an option to save / read in an already saved dataframe. 
 # currently only reads in, doesn't save. So this needs to be altered to save a new version!
 source("4_1_compare_outputs_samples.R")
 

@@ -1,5 +1,14 @@
-### Explore population size changes across Europe
+########################################################## 
+####### Explore population size changes across Europe ####
+####### Developers: N Waterlow & G Knight ################ 
+##########################################################
 
+# This script analyzes Eurostat population projections from 2019 and 2023.  
+# It loads and processes the data, extracts key demographic variables,  
+# and reshapes it for visualization. The script uses the tidyverse package  
+# for data manipulation and applies a color palette.  
+
+# load libraries 
 library(tidyverse)
 library(RColorBrewer)
 library(here)

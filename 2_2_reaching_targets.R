@@ -1,14 +1,23 @@
-# Set up the interventions to change the incidence rate. 
-# need to run setup.r and 1_2_calculate_incidence.R first
-# Project impact of interventions and generate Figure 4
+################################################################
+####### Set up the interventions to change the incidence rate ##
+####### Developers: N Waterlow & G Knight ###################### 
+################################################################
 
+# This script models the impact of various interventions on BSI incidence over time. 
+# It adjusts incidence rates based on intervention start years, target age groups, 
+# and intervention effects.
+# The results are stored in a data table, and visualizations are created to 
+# compare incidence trends, changes by age group, sex, and pathogen. 
+# Additionally, relative changes in incidence are computed
+# and compared across different projections (e.g., baseline vs intervention).
+# Outputs include plots and saved data objects for further analysis.
+
+# Both 0_Setup.r and 2_1_calculate_incidence.R need to be run first 
 
 # storage
 store_incidence_options <- d_for_model[,c("country", "year_s", "age_s", "age_squared_s", "sex","total_fixed", "total_varying", "pathogen", "projection")]
 colnames(store_incidence_options)[which(colnames(store_incidence_options)=="total_fixed")] <- "fixed"
 colnames(store_incidence_options)[which(colnames(store_incidence_options)=="total_varying")] <- "varying"
-
-
 
 for(ivt in 3:nrow(interventions)){ # for each intervention (ignoring fixed and varying)
 # how much to change the incidence changing rate by

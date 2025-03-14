@@ -1,4 +1,13 @@
-# load in modesl
+################################################################
+####### Load in models #########################################
+####### Developers: N Waterlow & G Knight ###################### 
+################################################################
+
+# This script loads and checks a set of pre-saved models from the "brms_fits/" directory.
+# It distinguishes between age-specific and plain models by filtering the model file names.
+# If `load_them_all` is set to TRUE, it loads all models into R for inspection.
+# The script also includes functionality to manually check specific models for issues, 
+# such as checking standard deviations of age in the models.
 
 
 load_them_all <- F
@@ -29,6 +38,4 @@ if(load_them_all == T){
 # xcv <- 14
 # plain_models[[xcv]]
 # plain_model_names[[xcv]]
-
-# All now good.
 
