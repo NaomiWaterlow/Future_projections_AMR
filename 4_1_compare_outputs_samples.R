@@ -23,6 +23,11 @@ model_target_multi <- c(1:length(plain_model_names))
 agesex_country_combo <- data.frame()
 agesex_overall_combo <- data.frame()
 
+########################################################################################################################################
+################################# To run them all #####################################################################################
+########################################################################################################################################
+# To get all results
+
 for(ivt in 1:nrow(interventions)){
   for(model_target in model_target_multi){
     
@@ -220,6 +225,18 @@ what_prop_up[order(prop_up)]
 
 # subset the relevant names
 specific_names <- cleaned_string[specific_subset]
+
+# What is the difference by 2030
+agesex_country_combo[projection == "BSL" & year_s %in% c(2030-2009) & 
+                       type == "linear"& 
+                       bug %in% specific_names] %>%
+  group_by(bug) %>%
+  arrange(rel_Q50) %>%
+  filter(!rel_Q50== "Inf") %>%
+  filter(row_number()==1 | row_number()==n()) %>%
+  select(c("Q50","rel_Q50","bug")) %>%
+  arrange(bug)
+
 
 # make a plot
 REL_COUNTRIES <- ggplot(agesex_country_combo[projection == "BSL" & year_s <= c(2030-2009) & 
