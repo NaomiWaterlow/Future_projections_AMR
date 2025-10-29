@@ -192,17 +192,37 @@ heatmap_maker[ Q50 == 0 & base == 0, rel_Q50 := exp(0)]
 
 heatmap_maker <- heatmap_maker %>%
   mutate(var = case_when(bac == 'Enterococcus faecalis' ~ 'E. faecalis',
-                         bac == 'Streptococcus pneumoniae' ~ 'S. pneumoniae',
+                         bac == 'Streptococcus pneumoniae' ~ 'S. pneumon.',
                          bac == 'Enterococcus faecium' ~ 'E. faecium',
                          bac == 'Klebsiella pneumoniae' ~ 'K. pneumoniae',
                          bac == 'Pseudomonas aeruginosa' ~ 'P. aeruginosa',
                          bac == 'Staphylococcus aureus' ~ 'S. aureus',
-                         bac == 'Staphylococcus aureus' ~ 'S. aureus'))
+                         bac == 'Acinetobacter species' ~ 'Acineto.',
+                         bac == 'Escherichia coli' ~ 'E. coli'))
 
 # create the plot
+PLOS_TEXT <- theme_bw(base_size = 14, base_family = "Arial") +
+  theme(
+    axis.title   = element_text(size = 14),
+    axis.text    = element_text(size = 14),
+    strip.text   = element_text(size = 10, face = "italic"),
+    legend.title = element_text(size = 14),
+    legend.text  = element_text(size = 14),
+    plot.title   = element_text(size = 14, face = "bold")
+  )
+
 HEATMAP <- ggplot(heatmap_maker, aes(x = country, y = drug, fill = log(rel_Q50))) + 
   geom_tile() + 
-  facet_grid(bac~., scales = "free", space = "free")+
+  theme_bw(base_size = 14, base_family = "Arial") +
+  theme(
+    axis.title   = element_text(size = 14),
+    axis.text    = element_text(size = 12),
+    strip.text   = element_text(size = 10, face = "italic"),
+    legend.title = element_text(size = 14),
+    legend.text  = element_text(size = 14),
+    plot.title   = element_text(size = 14, face = "bold")
+  ) + 
+  facet_grid(var~., scales = "free", space = "free")+
   scale_fill_gradient2(low = "darkgreen", high = "orange", mid = "white",
                        na.value = "lightgrey") + 
   labs(fill = "log(relative change)")
@@ -242,6 +262,7 @@ agesex_country_combo[projection == "BSL" & year_s %in% c(2030-2009) &
 REL_COUNTRIES <- ggplot(agesex_country_combo[projection == "BSL" & year_s <= c(2030-2009) & 
                                                bug %in% specific_names],
                         aes(x = year_s+2009, y = rel_Q50)) + 
+  PLOS_TEXT + 
   geom_ribbon(aes(ymin = rel_Q2.5, ymax = rel_Q97.5, fill = type), alpha = 0.5) + 
   geom_line(aes(colour = type)) + 
   # geom_hline(yintercept = 0, linetype =2) + 
@@ -260,6 +281,7 @@ REL_COUNTRIES_VARYING <- ggplot(agesex_country_combo[projection == "BSL" & year_
                                                        type == "linear"& 
                                                        bug %in% specific_names],
                                 aes(x = year_s+2009, y = rel_Q50)) + 
+  PLOS_TEXT + 
   geom_ribbon(aes(ymin = rel_Q2.5, ymax = rel_Q97.5, fill = interaction(bac, drug, sep = "\n")), alpha = 0.5) + 
   geom_line(aes(colour = interaction(bac, drug, sep = "\n"))) + 
   geom_hline(yintercept = 1, linetype =2) + 
@@ -301,6 +323,7 @@ REL_OVERALL <- ggplot(agesex_overall_combo[projection == "BSL" & year_s <= c(205
                                              bug %in% specific_names], aes(x = year_s+2009, y = rel_Q50)) + 
   geom_ribbon(aes(ymin = rel_Q2.5, ymax = rel_Q97.5, fill = type), alpha = 0.5) + 
   geom_line(aes(colour = type)) + 
+  PLOS_TEXT + 
   facet_grid(.~interaction(bac, drug, sep = "\n"))+
   # geom_hline(yintercept = 0, linetype =2) + 
   # scale_fill_manual(values = c("darkgreen", "orange"))+
@@ -319,15 +342,27 @@ REL_OVERALL_VARYING <- ggplot(agesex_overall_combo[projection == "BSL" & year_s 
                                                      bug %in% specific_names], aes(x = year_s+2009, y = rel_Q50)) + 
   geom_ribbon(aes(ymin = rel_Q2.5, ymax = rel_Q97.5, fill =interaction(bac, drug, sep = "\n")), alpha = 0.5) + 
   geom_line(aes(colour = interaction(bac, drug, sep = "\n"))) + 
+  # PLOS_TEXT + 
   #  facet_grid(.~bug)+
   # geom_hline(yintercept = 0, linetype =2) + 
-  scale_fill_manual(values = c("darkgreen", "orange", "purple"))+
-  scale_colour_manual(values = c("darkgreen", "orange", "purple"))+
+  scale_fill_manual(values = c("darkgreen", "orange", "purple"), 
+                    labels = c(
+                      "Acinetobacter species,<br>Aminoglycosides",
+                      "<i>E. coli</i>, <br>Aminopenicillins",
+                      "<i>S. aureus</i>, <br>MRSA (oxacillin or cefoxitin)"
+                    )) +
+  scale_colour_manual(values = c("darkgreen", "orange", "purple"),
+                      labels = c(
+                        "Acinetobacter species,<br>Aminoglycosides",
+                        "<i>E. coli</i>, <br>Aminopenicillins",
+                        "<i>S. aureus</i>, <br>MRSA (oxacillin or cefoxitin)"
+                      ))+
+  theme(legend.text = element_markdown()) + 
   #  lims(y = c(1,120000000))+
   labs(y = "Resistant BSI vs 2019",, title = "A",
-       x = "Year", colour = "Bacteria\nAntibiotic", fill = "Bacteria") + 
-  theme(legend.key.height = unit(1.5, "lines"), 
-        strip.text = element_text(face = "italic"))
+       x = "Year", colour = "Bacteria\nAntibiotic", fill = "Bacteria\nAntibiotic") + 
+  theme(legend.key.height = unit(1.5, "lines"))
+
 
 ggsave(grid.arrange(REL_OVERALL_VARYING,
                     REL_COUNTRIES_VARYING + theme(legend.position = "none"),
@@ -340,12 +375,18 @@ ggsave(grid.arrange(REL_OVERALL_VARYING,
 
 ggsave(grid.arrange(REL_OVERALL_VARYING,
                     REL_COUNTRIES_VARYING + theme(legend.position = "none"),
-                    HEATMAP + labs(title = "C", fill = "relative change (log)"),
+                    HEATMAP + labs(title = "C", fill = "relative\nchange\n(log)"),
                     layout_matrix = rbind(c(1,3), 
                                           c(2,3), 
                                           c(2,3)))
-       , file=paste0("plots_nw/FIGURE3.jpeg"),
-       width =20, height = 10)
+       , file=paste0("plots_nw/FIGURE3.tiff"),
+       width = 20,  
+       height = 10, 
+       dpi = 600,
+       device = "tiff",
+       compression = "lzw"   # PLOS recommends LZW for TIFF
+)#width =20, height = 10, device='tiff', dpi=600)
+
 
 
 
